@@ -1,0 +1,11 @@
+.DS_STORE
+*.log
+
+**/.idea/dictionaries
+**/.idea/tasks.xml
+**/.idea/workspace.xml
+
+node_modules
+
+dist
+coverage
