@@ -1,52 +1,55 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchPhotos, clearTest } from '../../services/ws/UnsplashWS'
+import { push } from 'react-router-redux'
+import { fetchPhotosActions, clearTest } from '../../services/ws/UnsplashWS'
 import UnsplashImg from '../../components/UnsplashImg/UnsplashImg'
 
-class Unsplash extends React.Component {
-
-  constructor () {
-    super()
-    this.handleClick = this.handleClick.bind(this)
-  }
-
+const Unsplash = React.createClass({
+  propTypes: {
+    dispatch: React.PropTypes.func.isRequired,
+    datas: React.PropTypes.array,
+    clearTest: React.PropTypes.func.isRequired,
+    content: React.PropTypes.string,
+    fetchPhotos: React.PropTypes.func.isRequired,
+    history: React.PropTypes.object,
+  },
+  componentWillMount () {
+    this._fetchData()
+  },
+  componentDidUpdate () {
+    this._fetchData()
+  },
   componentDidMount () {
-    this.props.dispatch(fetchPhotos())
     if (this.props.content) {
       alert(this.props.content)
-      this.props.dispatch(clearTest())
+      this.props.clearTest()
     }
-  }
-
-  componentWillUnmount () {
-
-  }
-
-  handleClick (event) {
-    this.props.history.push('/detail/'+event.currentTarget.dataset.itemId)
-  }
-
+  },
+  _fetchData () {
+    if (!this.props.datas) {
+      this.props.fetchPhotos()
+    }
+  },
+  _handleClick (event) {
+    this.props.dispatch(push(`/detail/${event.currentTarget.dataset.itemId}`))
+  },
   render () {
-    var images = this.props.datas
     return (
       <div className='container text-center'>
-        <UnsplashImg datas={images} onClick={this.handleClick} />
+        <UnsplashImg datas={ this.props.datas } onClick={ this._handleClick } />
       </div>)
-  }
-}
+  },
+})
 
-Unsplash.propTypes = {
-  dispatch: React.PropTypes.func.isRequired,
-  datas: React.PropTypes.array,
-  content: React.PropTypes.string,
-  history: React.PropTypes.object,
-}
+const mapStateToProps = ({ UnsplashWS: { datas, content } }) => ({
+  datas,
+  content,
+})
 
-const mapStateToProps = (state) => {
-  return {
-    datas: state.UnsplashWS.datas,
-    content: state.UnsplashWS.content,
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  dispatch: dispatch,
+  fetchPhotos: fetchPhotosActions(dispatch).fetchPhotos,
+  clearTest: () => dispatch(clearTest()),
+})
 
-export default connect(mapStateToProps)(Unsplash)
+export default connect(mapStateToProps, mapDispatchToProps)(Unsplash)

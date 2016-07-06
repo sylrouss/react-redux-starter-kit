@@ -1,26 +1,22 @@
 import React from 'react'
-import { connect } from 'react-redux'
-// import { Link } from 'react-router'
 import styles from './UnsplashImg.less'
 
 class UnsplashImg extends React.Component {
-
   render () {
-    const datas = this.props.datas
-    const click = this.props.onClick
-
-    var showImages = datas.map(function (item, index) {
-      // return <Link to={`/detail/${item.id}`} key={item.id}><img src={item.urls.small} onClick={click}/></Link>
-      return <img src={item.urls.small} key={item.id} onClick={click} data-item-id={item.id}/>
-    })
-
     return (
-      <div>
-            {showImages}
+      <div className={ styles.imagesContainer }>
+        { this.props.datas &&
+          this.props.datas.map((item, index) =>
+            <img
+              src={ item.urls.small }
+              key={ item.id }
+              onClick={ this.props.onClick }
+              data-item-id={ item.id } />
+          )
+        }
       </div>
     )
   }
-
 }
 
 UnsplashImg.propTypes = {
@@ -28,4 +24,4 @@ UnsplashImg.propTypes = {
   onClick: React.PropTypes.func,
 }
 
-export default connect()(UnsplashImg)
+export default UnsplashImg

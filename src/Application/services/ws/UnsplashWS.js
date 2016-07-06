@@ -4,7 +4,7 @@ let urlserver = 'https://api.unsplash.com/'
 let method = 'photos'
 let clientID = '?client_id=a0b6423c05bef840adda4ad36e509b930f4a76c3d445783e3d1b45c3b7a1c765'
 
-export const UnsplashWS = (state = { datas: [] }, action) => {
+export const UnsplashWS = (state = { datas: undefined }, action) => {
   switch (action.type) {
     case 'SET_PHOTOS':
       return Object.assign({}, state, { datas: action.datas })
@@ -28,8 +28,8 @@ export const setPhotos = (data) => {
   }
 }
 
-export function fetchPhotos () {
-  return (dispatch, state) => {
+export function fetchPhotosActions (dispatch) {
+  function fetchPhotos () {
     fetch(urlserver+method+clientID)
       .then(r => r.json())
       .then(data => {
@@ -41,6 +41,10 @@ export function fetchPhotos () {
           console.log(`Erreur code: ${error.code}`),
           dispatch(errorLoading(`Erreur durant la récupération des users: ${JSON.stringify(error)}`))
       ))
+  }
+
+  return {
+    fetchPhotos,
   }
 }
 
