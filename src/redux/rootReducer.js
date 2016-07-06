@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import { routeReducer as router } from 'react-router-redux'
-import counter from './modules/counter'
 import { reducer as formReducer } from 'redux-form'
 
-export default combineReducers({
-  counter,
+import ApplicationReducers from '../Application/ApplicationReducers'
+
+const reducers = {
   router,
   form: formReducer,
-})
+}
+
+export default combineReducers(Object.assign({}, reducers, ApplicationReducers))

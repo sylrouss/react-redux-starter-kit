@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { useRouterHistory } from 'react-router'
+import { useRouterHistory, browserHistory } from 'react-router'
 import { createHistory } from 'history'
 import makeRoutes from './routes'
 import Root from './containers/Root'
@@ -9,9 +9,12 @@ import configureStore from './redux/configureStore'
 const historyConfig = { basename: __BASENAME__ }
 const history = useRouterHistory(createHistory)(historyConfig)
 
-const initialState = window.__INITIAL_STATE__
+// const initialState = window.__INITIAL_STATE__
+const initialState = localStorage.getItem('appStore') ? JSON.parse(localStorage.getItem('appStore')) : {}
 const store = configureStore({ initialState, history })
-
+store.subscribe(function save(){
+  localStorage.setItem('appStore', JSON.stringify(store.getState()))
+})
 const routes = makeRoutes(store)
 
 // Render the React application to the DOM
