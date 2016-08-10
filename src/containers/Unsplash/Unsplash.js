@@ -36,7 +36,6 @@ const Unsplash = React.createClass({
   render () {
     return (
       <div className='container text-center'>
-        Hello Jeremy
         { this.props.datas && <UnsplashImg datas={ this.props.datas } onClick={ this._handleClick } /> }
       </div>)
   },
