@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
-import { reducer as formReducer } from 'redux-form'
+import unsplash from './modules/unsplash'
 
-import ApplicationReducers from '../Application/ApplicationReducers'
-
-const reducers = {
+const rootReducer = combineReducers({
   router,
-  form: formReducer,
-}
+  unsplash,
+})
 
-export default combineReducers(Object.assign({}, reducers, ApplicationReducers))
+export default rootReducer

@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { fetchPhotosActions, clearTest } from '../../services/ws/UnsplashWS'
-import UnsplashImg from '../../components/UnsplashImg/UnsplashImg'
+import { actions } from 'ACTIONS/unsplash'
+import UnsplashImg from 'COMPONENTS/UnsplashImg/UnsplashImg'
 
 const Unsplash = React.createClass({
   propTypes: {
@@ -31,25 +31,26 @@ const Unsplash = React.createClass({
     }
   },
   _handleClick (event) {
-    this.props.dispatch(push(`/detail/${event.currentTarget.dataset.itemId}`))
+    this.props.dispatch(push(`/detail/${ event.currentTarget.dataset.itemId }`))
   },
   render () {
     return (
       <div className='container text-center'>
-        <UnsplashImg datas={ this.props.datas } onClick={ this._handleClick } />
+        Hello Jeremy
+        { this.props.datas && <UnsplashImg datas={ this.props.datas } onClick={ this._handleClick } /> }
       </div>)
   },
 })
 
-const mapStateToProps = ({ UnsplashWS: { datas, content } }) => ({
+const mapStateToProps = ({ unsplash: { datas, content } }) => ({
   datas,
   content,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   dispatch: dispatch,
-  fetchPhotos: fetchPhotosActions(dispatch).fetchPhotos,
-  clearTest: () => dispatch(clearTest()),
+  fetchPhotos: actions.fetchPhotosRequests(dispatch).fetchPhotos,
+  clearTest: () => dispatch(actions.clearTest()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Unsplash)

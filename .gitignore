@@ -1,11 +1,15 @@
 .DS_STORE
 *.log
 
-**/.idea/dictionaries
-**/.idea/tasks.xml
-**/.idea/workspace.xml
-
+.idea
+*.pyc
 node_modules
+nginx/default.conf
 
 dist
 coverage
+Phantom*
+debug.txt
+debug_latest.txt
+test.py
+prev.txt

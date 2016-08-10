@@ -7,7 +7,7 @@ import _debug from 'debug'
 
 const debug = _debug('app:webpack:config')
 const paths = config.utils_paths
-const {__DEV__, __PROD__, __TEST__} = config.globals
+const { __DEV__, __PROD__, __TEST__ } = config.globals
 
 debug('Create configuration.')
 const webpackConfig = {
@@ -19,6 +19,10 @@ const webpackConfig = {
     extensions: ['', '.js', '.jsx'],
     alias: {
       STYLES: paths.base(config.dir_client) + '/styles',
+      ACTIONS: paths.base(config.dir_client) + '/redux/modules',
+      COMPONENTS: paths.base(config.dir_client) + '/components',
+      SRC: paths.base(config.dir_client),
+      UTILS: paths.base(config.dir_client) + '/utils',
     },
   },
   module: {},
@@ -30,7 +34,7 @@ const APP_ENTRY_PATH = paths.base(config.dir_client) + '/client.js'
 
 webpackConfig.entry = {
   app: __DEV__
-    ? [APP_ENTRY_PATH, `webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`]
+    ? [APP_ENTRY_PATH, `webpack-hot-middleware/client?path=${ config.compiler_public_path }__webpack_hmr`]
     : [APP_ENTRY_PATH],
   vendor: config.compiler_vendor,
 }
@@ -39,7 +43,7 @@ webpackConfig.entry = {
 // Bundle Output
 // ------------------------------------
 webpackConfig.output = {
-  filename: `[name].[${config.compiler_hash_type}].js`,
+  filename: `[name].[${ config.compiler_hash_type }].js`,
   path: paths.base(config.dir_dist),
   publicPath: config.compiler_public_path,
 }
@@ -205,8 +209,9 @@ webpackConfig.module.loaders.push(
   { test: /\.otf(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=font/opentype' },
   { test: /\.ttf(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream' },
   { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
+  { test: /\.txt(\?.*)?$/,   loader: 'raw' },
   { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
-  { test: /\.(png|jpg)$/,    loader: 'url-loader?limit=10000' }
+  { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }
 )
 
 // ------------------------------------

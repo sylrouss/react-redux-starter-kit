@@ -7,22 +7,29 @@ const debug = _debug('app:karma')
 debug('Create configuration.')
 
 const karmaConfig = {
-  basePath: '../', // project root in relation to bin/karma.js
+  basePath: '../',
   files: [
+    './node_modules/promise-polyfill/promise.js',
     './node_modules/phantomjs-polyfill/bind-polyfill.js',
     {
-      pattern: `./${config.dir_test}/test-bundler.js`,
+      pattern: `./${ config.dir_test }/test-bundler.js`,
       watched: false,
       served: true,
       included: true,
     },
   ],
   singleRun: !argv.watch,
-  frameworks: ['mocha'],
+  frameworks: [
+    'intl-shim',
+    'mocha',
+  ],
   preprocessors: {
-    [`${config.dir_test}/test-bundler.js`]: ['webpack', 'sourcemap'],
+    [`${ config.dir_test }/test-bundler.js`]: ['webpack', 'sourcemap'],
   },
-  reporters: ['spec'],
+  junitReporter: {
+    outputFile: 'test-results.xml',
+  },
+  reporters: ['spec', 'junit'],
   browsers: ['PhantomJS'],
   webpack: {
     devtool: 'inline-source-map',
@@ -49,6 +56,7 @@ const karmaConfig = {
       ...webpackConfig.externals,
       jsdom: 'window',
       cheerio: 'window',
+      'react/addons': true,
       'react/lib/ExecutionEnvironment': true,
       'react/lib/ReactContext': 'window',
       'text-encoding': 'window',
@@ -73,4 +81,5 @@ if (config.coverage_enabled) {
   }]
 }
 
-export default (cfg) => cfg.set(karmaConfig)
+// cannot use `export default` because of Karma.
+module.exports = (cfg) => cfg.set(karmaConfig)

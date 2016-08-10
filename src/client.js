@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { useRouterHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
-import Root from './containers/Root'
+import Root from './containers/App/Root'
 import createStore from './redux/createStore'
 
 // ========================================================
@@ -41,7 +41,7 @@ const MOUNT_NODE = document.getElementById('root')
 let render = (routerKey = null) => {
   const routes = require('./routes').default(store)
   ReactDOM.render(
-    <Root history={history} routes={routes} store={store} />,
+    <Root history={ history } routes={ routes } store={ store } routerKey={ routerKey } />,
     document.getElementById('root')
   )
 }

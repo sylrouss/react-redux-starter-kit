@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
 
-import App from 'Application/components/App/App'
-import NotFound from 'Application/components/Errors/404/NotFound'
-import Unsplash from 'Application/containers/UnsplashContainer/Unsplash'
-import UnsplashDetail from 'Application/containers/UnsplashContainer/UnsplashDetail'
+import App from 'containers/App/App'
+import NotFound from 'containers/App/NotFound'
+import Unsplash from 'containers/Unsplash/Unsplash'
+import UnsplashDetail from 'containers/Unsplash/UnsplashDetail'
 
 export default (store) => (
   <Route path='/' component={ App }>
