@@ -3,7 +3,7 @@ import styles from './App.less'
 
 const App = ({ children }) => (
   <div className={ styles.appContent }>
-    {children}
+    { children }
   </div>
 )
 

@@ -5,7 +5,6 @@ import UnsplashImgDetail from 'COMPONENTS/UnsplashImg/UnsplashImgDetail'
 
 const UnsplashDetail = React.createClass({
   propTypes: {
-    dispatch: React.PropTypes.func.isRequired,
     detail: React.PropTypes.object,
     params: React.PropTypes.object,
     fetchPhoto: React.PropTypes.func.isRequired,
@@ -16,10 +15,6 @@ const UnsplashDetail = React.createClass({
   },
   componentDidUpdate () {
     this._fetchData()
-  },
-  componentWillUnmount () {
-    this.props.dispatch(actions.clearPhoto())
-    this.props.dispatch(actions.testContent(prompt('Why?')))
   },
   _fetchData () {
     if (!this.props.detail) {
@@ -44,7 +39,6 @@ const mapStateToProps = ({ unsplash: { detail } }) => ({
 const mapDispatchToProps = (dispatch) => ({
   dispatch: dispatch,
   fetchPhoto: actions.fetchPhotosRequests(dispatch).fetchPhoto,
-  clearTest: () => dispatch(actions.clearTest()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UnsplashDetail)

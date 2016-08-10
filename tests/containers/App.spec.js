@@ -1,33 +1,12 @@
 import React from 'react'
-import TestUtils from 'react-addons-test-utils'
-import App from 'containers/App'
+import App from 'containers/App/App'
+import { Provider } from 'react-redux'
+import { createMockStore, mount } from '../testHelpers'
 
-function shallowRender (component) {
-  const renderer = TestUtils.createRenderer()
-
-  renderer.render(component)
-  return renderer.getRenderOutput()
-}
-
-function shallowRenderWithProps (props = {}) {
-  return shallowRender(<App {...props} />)
-}
-
-describe('(containers) App', function () {
-  let _component
-  let _props
-  let _child
-
-  beforeEach(function () {
-    _child = <h1 className='child'>Child</h1>
-    _props = {
-      children: _child
-    }
-
-    _component = shallowRenderWithProps(_props)
-  })
-
-  it('Should render as a <div>.', function () {
-    expect(_component.type).to.equal('div')
+describe('(containers) App', () => {
+  it('Should render as a <div>.', () => {
+    let props = { children: <h1 className='child'>Child</h1> }
+    let container = mount(<Provider store={ createMockStore() }><App { ...props } /></Provider>)
+    expect(container.find('div')).not.to.be.undefined
   })
 })

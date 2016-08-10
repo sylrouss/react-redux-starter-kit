@@ -1,61 +1,81 @@
-let urlserver = 'https://api.unsplash.com/'
-let method = 'photos'
-let clientID = '?client_id=a0b6423c05bef840adda4ad36e509b930f4a76c3d445783e3d1b45c3b7a1c765'
+const URL = 'https://api.unsplash.com'
+const METHOD = 'photos'
+const CLIENT_ID = 'a0b6423c05bef840adda4ad36e509b930f4a76c3d445783e3d1b45c3b7a1c765'
 
-const SET_PHOTOS = 'SET_PHOTOS'
-const SET_PHOTO = 'SET_PHOTO'
-const CLEAR_PHOTO = 'CLEAR_PHOTO'
-const CLEAR_TEST = 'CLEAR_TEST'
-const TEST = 'TEST'
+const PHOTO_FETCH_SUCCESS = 'PHOTO_FETCH_SUCCESS'
+const PHOTO_FETCH_FAILURE = 'PHOTO_FETCH_FAILURE'
+const PHOTO_FETCH_SENDING = 'PHOTO_FETCH_SENDING'
+const PHOTOS_FETCH_SUCCESS = 'PHOTOS_FETCH_SUCCESS'
+const PHOTOS_FETCH_FAILURE = 'PHOTOS_FETCH_FAILURE'
+const PHOTOS_FETCH_SENDING = 'PHOTOS_FETCH_SENDING'
+const PHOTO_RESET = 'PHOTO_RESET'
 
-const setPhotos = (data) => ({
-  type: SET_PHOTOS,
-  datas: data,
+const photosFetchSending = () : Action => ({
+  type: PHOTOS_FETCH_SENDING,
 })
 
-const setPhoto = (data) => ({
-  type: SET_PHOTO,
-  datas: data,
+const photosFetchFailure = (error) => ({
+  type: PHOTOS_FETCH_FAILURE,
+  payload: {
+    error: error,
+  },
 })
 
-const clearPhoto = () => ({
-  type: CLEAR_PHOTO,
+const photosFetchSuccess = (data) => ({
+  type: PHOTOS_FETCH_SUCCESS,
+  payload: {
+    datas: data,
+  },
 })
 
-const testContent = (value) => ({
-  type: TEST,
-  content: value,
+const photoFetchSending = () : Action => ({
+  type: PHOTO_FETCH_SENDING,
 })
 
-const clearTest = () => ({
-  type: CLEAR_TEST,
+const photoFetchFailure = (error) => ({
+  type: PHOTO_FETCH_FAILURE,
+  payload: {
+    error: error,
+  },
+})
+
+const photoFetchSuccess = (data) => ({
+  type: PHOTO_FETCH_SUCCESS,
+  payload: {
+    datas: data,
+  },
+})
+
+const photoReset = () => ({
+  type: PHOTO_RESET,
 })
 
 const fetchPhotosRequests = (dispatch) => {
-  const fetchPhotos = () =>
-    fetch(urlserver+method+clientID)
+  const fetchPhotos = () => {
+    dispatch(photosFetchSending())
+    fetch(`${ URL }/${ METHOD }?client_id=${ CLIENT_ID }`)
       .then(r => r.json())
       .then(data => {
-        dispatch(setPhotos(data))
+        dispatch(photosFetchSuccess(data))
       })
       .catch(error => {
         console.log(JSON.stringify(error))
-        console.log(`Erreur status: ${ error.status }`)
-        console.log(`Erreur code: ${ error.code }`)
+        dispatch(photosFetchFailure(error))
       })
+  }
 
-  const fetchPhoto = (id) =>
-    fetch(urlserver+method+'/'+id+clientID)
+  const fetchPhoto = (id) => {
+    dispatch(photoFetchSending())
+    fetch(`${ URL }/${ METHOD }/${ id }?client_id=${ CLIENT_ID }`)
       .then(r => r.json())
       .then(data => {
-        dispatch(setPhoto(data))
+        dispatch(photoFetchSuccess(data))
       })
       .catch(error => {
         console.log(JSON.stringify(error))
-        console.log(`Erreur status: ${ error.status }`)
-        console.log(`Erreur code: ${ error.code }`)
+        dispatch(photoFetchFailure())
       })
-
+  }
   return {
     fetchPhotos,
     fetchPhoto,
@@ -63,41 +83,58 @@ const fetchPhotosRequests = (dispatch) => {
 }
 
 export const actions = {
-  clearPhoto,
-  clearTest,
-  testContent,
-  setPhoto,
-  setPhotos,
   fetchPhotosRequests,
+  photoFetchFailure,
+  photoFetchSending,
+  photoFetchSuccess,
+  photosFetchFailure,
+  photosFetchSending,
+  photosFetchSuccess,
+  photoReset,
 }
 
 const ACTION_HANDLERS = {
-  [CLEAR_PHOTO]: (state, action) => ({
+  [PHOTO_FETCH_FAILURE]: (state, action) => ({
+    ...state,
+    error: action.payload.error,
+    sending: false,
+  }),
+  [PHOTO_FETCH_SENDING]: (state, action) => ({
+    ...state,
+    sending: true,
+  }),
+  [PHOTO_FETCH_SUCCESS]: (state, action) => ({
+    ...state,
+    detail: action.payload.datas,
+    error: undefined,
+    sending: false,
+  }),
+  [PHOTO_RESET]: (state, action) => ({
     ...state,
     detail: undefined,
   }),
-  [CLEAR_TEST]: (state, action) => ({
+  [PHOTOS_FETCH_FAILURE]: (state, action) => ({
     ...state,
-    content: undefined,
+    error: action.payload.error,
+    sending: false,
   }),
-  [SET_PHOTO]: (state, action) => ({
+  [PHOTOS_FETCH_SENDING]: (state, action) => ({
     ...state,
-    detail: action.datas,
+    sending: true,
   }),
-  [SET_PHOTOS]: (state, action) => ({
+  [PHOTOS_FETCH_SUCCESS]: (state, action) => ({
     ...state,
-    datas: action.datas,
-  }),
-  [TEST]: (state, action) => ({
-    ...state,
-    content: action.content,
+    datas: action.payload.datas,
+    error: undefined,
+    sending: false,
   }),
 }
 
 const initialState = {
-  content: undefined,
   datas: undefined,
   detail: undefined,
+  error: undefined,
+  sending: false,
 }
 
 export default function unsplashReducer (state = initialState, action: Action): object {

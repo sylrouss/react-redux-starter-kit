@@ -6,10 +6,8 @@ import UnsplashImg from 'COMPONENTS/UnsplashImg/UnsplashImg'
 
 const Unsplash = React.createClass({
   propTypes: {
-    dispatch: React.PropTypes.func.isRequired,
     datas: React.PropTypes.array,
-    clearTest: React.PropTypes.func.isRequired,
-    content: React.PropTypes.string,
+    dispatch: React.PropTypes.func.isRequired,
     fetchPhotos: React.PropTypes.func.isRequired,
     history: React.PropTypes.object,
   },
@@ -18,12 +16,6 @@ const Unsplash = React.createClass({
   },
   componentDidUpdate () {
     this._fetchData()
-  },
-  componentDidMount () {
-    if (this.props.content) {
-      alert(this.props.content)
-      this.props.clearTest()
-    }
   },
   _fetchData () {
     if (!this.props.datas) {
@@ -41,15 +33,13 @@ const Unsplash = React.createClass({
   },
 })
 
-const mapStateToProps = ({ unsplash: { datas, content } }) => ({
+const mapStateToProps = ({ unsplash: { datas } }) => ({
   datas,
-  content,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   dispatch: dispatch,
   fetchPhotos: actions.fetchPhotosRequests(dispatch).fetchPhotos,
-  clearTest: () => dispatch(actions.clearTest()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Unsplash)
