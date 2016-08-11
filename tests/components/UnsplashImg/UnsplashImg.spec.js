@@ -4,7 +4,7 @@ import { mount } from '../../testHelpers'
 
 describe('(component) UnsplashImg', () => {
   describe('Testing structure of the component', () => {
-    it('should render an image', function () {
+    it('should render an image', () => {
       let props = { datas: [
         { id: '1', urls: { small: 'http://foo.bar.com/image1.png' } },
         { id: '2', urls: { small: 'http://foo.bar.com/image2.png' } },
@@ -16,7 +16,7 @@ describe('(component) UnsplashImg', () => {
       expect(images.get(1).src).to.equal('http://foo.bar.com/image2.png')
     })
 
-    it('should render an empty div when datas is undefined', function () {
+    it('should render an empty div when datas is undefined', () => {
       let props = { onClick: sinon.spy() }
       const wrapper = mount(<UnsplashImg { ...props } />)
       expect(wrapper.find('div')).to.have.length(1)

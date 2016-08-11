@@ -1,6 +1,6 @@
-const URL = 'https://api.unsplash.com'
-const METHOD = 'photos'
-const CLIENT_ID = 'a0b6423c05bef840adda4ad36e509b930f4a76c3d445783e3d1b45c3b7a1c765'
+export const URL = 'https://api.unsplash.com'
+export const METHOD = 'photos'
+export const CLIENT_ID = 'a0b6423c05bef840adda4ad36e509b930f4a76c3d445783e3d1b45c3b7a1c765'
 
 const PHOTO_FETCH_SUCCESS = 'PHOTO_FETCH_SUCCESS'
 const PHOTO_FETCH_FAILURE = 'PHOTO_FETCH_FAILURE'
@@ -54,7 +54,7 @@ const fetchPhotosRequests = (dispatch) => {
   const fetchPhotos = () => {
     dispatch(photosFetchSending())
     fetch(`${ URL }/${ METHOD }?client_id=${ CLIENT_ID }`)
-      .then(r => r.json())
+      .then(response => response.json())
       .then(data => {
         dispatch(photosFetchSuccess(data))
       })
@@ -67,13 +67,13 @@ const fetchPhotosRequests = (dispatch) => {
   const fetchPhoto = (id) => {
     dispatch(photoFetchSending())
     fetch(`${ URL }/${ METHOD }/${ id }?client_id=${ CLIENT_ID }`)
-      .then(r => r.json())
+      .then(response => response.json())
       .then(data => {
         dispatch(photoFetchSuccess(data))
       })
       .catch(error => {
         console.log(JSON.stringify(error))
-        dispatch(photoFetchFailure())
+        dispatch(photoFetchFailure(error))
       })
   }
   return {

@@ -1,20 +1,22 @@
 import {
   actions,
   default as unsplashReducer,
+  URL, METHOD, CLIENT_ID,
 } from 'ACTIONS/unsplash'
+import fetchMock from 'fetch-mock'
 
-describe('(Redux Module) unsplash', function () {
-  describe('(ACTIONS)', function () {
-    it('should export actions as an object', function () {
+describe('(Redux Module) unsplash', () => {
+  describe('(ACTIONS)', () => {
+    it('should export actions as an object', () => {
       expect(actions).to.be.a('object')
     })
 
-    describe('(Action Creator) photoFetchSuccess', function () {
-      it('should be exported as a function', function () {
+    describe('(Action Creator) photoFetchSuccess', () => {
+      it('should be exported as a function', () => {
         expect(actions.photoFetchSuccess).to.be.a('function')
       })
 
-      it('should return an action with type "PHOTO_FETCH_SUCCESS" with payload', function () {
+      it('should return an action with type "PHOTO_FETCH_SUCCESS" with payload', () => {
         let action = actions.photoFetchSuccess('success')
         expect(action).to.deep.equal({
           type: 'PHOTO_FETCH_SUCCESS',
@@ -25,12 +27,12 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    describe('(Action Creator) photoFetchFailure', function () {
-      it('should be exported as a function', function () {
+    describe('(Action Creator) photoFetchFailure', () => {
+      it('should be exported as a function', () => {
         expect(actions.photoFetchFailure).to.be.a('function')
       })
 
-      it('should return an action with type "PHOTO_FETCH_FAILURE" with payload', function () {
+      it('should return an action with type "PHOTO_FETCH_FAILURE" with payload', () => {
         let action = actions.photoFetchFailure('error')
         expect(action).to.deep.equal({
           type: 'PHOTO_FETCH_FAILURE',
@@ -41,23 +43,23 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    describe('(Action Creator) photoFetchSending', function () {
-      it('should be exported as a function', function () {
+    describe('(Action Creator) photoFetchSending', () => {
+      it('should be exported as a function', () => {
         expect(actions.photoFetchSending).to.be.a('function')
       })
 
-      it('should return an action with type "PHOTO_FETCH_SENDING"', function () {
+      it('should return an action with type "PHOTO_FETCH_SENDING"', () => {
         let action = actions.photoFetchSending()
         expect(action).to.deep.equal({ type: 'PHOTO_FETCH_SENDING' })
       })
     })
 
-    describe('(Action Creator) photosFetchSending', function () {
-      it('should be exported as a function', function () {
+    describe('(Action Creator) photosFetchSending', () => {
+      it('should be exported as a function', () => {
         expect(actions.photosFetchSending).to.be.a('function')
       })
 
-      it('should return an action with type "PHOTOS_FETCH_SENDING" with payload', function () {
+      it('should return an action with type "PHOTOS_FETCH_SENDING" with payload', () => {
         let action = actions.photosFetchSending()
         expect(action).to.deep.equal({
           type: 'PHOTOS_FETCH_SENDING',
@@ -65,12 +67,12 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    describe('(Action Creator) photosFetchSuccess', function () {
-      it('should be exported as a function', function () {
+    describe('(Action Creator) photosFetchSuccess', () => {
+      it('should be exported as a function', () => {
         expect(actions.photosFetchSuccess).to.be.a('function')
       })
 
-      it('should return an action with type "PHOTOS_FETCH_SUCCESS" with payload', function () {
+      it('should return an action with type "PHOTOS_FETCH_SUCCESS" with payload', () => {
         let action = actions.photosFetchSuccess('success')
         expect(action).to.deep.equal({
           type: 'PHOTOS_FETCH_SUCCESS',
@@ -81,12 +83,12 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    describe('(Action Creator) photosFetchFailure', function () {
-      it('should be exported as a function', function () {
+    describe('(Action Creator) photosFetchFailure', () => {
+      it('should be exported as a function', () => {
         expect(actions.photosFetchFailure).to.be.a('function')
       })
 
-      it('should return an action with type "PHOTOS_FETCH_FAILURE" with payload', function () {
+      it('should return an action with type "PHOTOS_FETCH_FAILURE" with payload', () => {
         let action = actions.photosFetchFailure('error')
         expect(action).to.deep.equal({
           type: 'PHOTOS_FETCH_FAILURE',
@@ -97,12 +99,12 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    describe('(Action Creator) photoReset', function () {
-      it('should be exported as a function', function () {
+    describe('(Action Creator) photoReset', () => {
+      it('should be exported as a function', () => {
         expect(actions.photoReset).to.be.a('function')
       })
 
-      it('should return an action with type "PHOTO_RESET" with payload', function () {
+      it('should return an action with type "PHOTO_RESET" with payload', () => {
         let action = actions.photoReset()
         expect(action).to.deep.equal({
           type: 'PHOTO_RESET',
@@ -111,12 +113,12 @@ describe('(Redux Module) unsplash', function () {
     })
   })
 
-  describe('(Reducer)', function () {
-    it('should be a function', function () {
+  describe('(Reducer)', () => {
+    it('should be a function', () => {
       expect(unsplashReducer).to.be.a('function')
     })
 
-    it('should initialize with a initial fetch unsplash state', function () {
+    it('should initialize with a initial fetch unsplash state', () => {
       let state = unsplashReducer(undefined, {})
       expect(state).to.deep.equal({
         datas: undefined,
@@ -126,7 +128,7 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    it('should return the previous state if an action was not matched', function () {
+    it('should return the previous state if an action was not matched', () => {
       let state = unsplashReducer(undefined, {})
       expect(unsplashReducer(state, { type: '@@@@@@@' })).to.deep.equal(state)
 
@@ -142,8 +144,8 @@ describe('(Redux Module) unsplash', function () {
     })
   })
 
-  describe('(Action Handler)', function () {
-    it('should set fetched photos', function () {
+  describe('(Action Handler)', () => {
+    it('should set fetched photos', () => {
       let state = unsplashReducer(undefined, {})
       expect(state).to.deep.equal({
         datas: undefined,
@@ -161,7 +163,7 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    it('should set error when fetching photos fails', function () {
+    it('should set error when fetching photos fails', () => {
       let state = unsplashReducer(undefined, {})
       expect(state).to.deep.equal({
         datas: undefined,
@@ -179,7 +181,7 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    it('should set sending when fetching photos', function () {
+    it('should set sending when fetching photos', () => {
       let state = unsplashReducer(undefined, {})
       expect(state).to.deep.equal({
         datas: undefined,
@@ -197,7 +199,7 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    it('should set fetched photo', function () {
+    it('should set fetched photo', () => {
       let state = unsplashReducer(undefined, {})
       expect(state).to.deep.equal({
         datas: undefined,
@@ -215,7 +217,7 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    it('should set error when fetching photo fails', function () {
+    it('should set error when fetching photo fails', () => {
       let state = unsplashReducer(undefined, {})
       expect(state).to.deep.equal({
         datas: undefined,
@@ -233,7 +235,7 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    it('should set sending when fetching photo', function () {
+    it('should set sending when fetching photo', () => {
       let state = unsplashReducer(undefined, {})
       expect(state).to.deep.equal({
         datas: undefined,
@@ -251,7 +253,7 @@ describe('(Redux Module) unsplash', function () {
       })
     })
 
-    it('should reset photos', function () {
+    it('should reset photos', () => {
       let state = unsplashReducer(undefined, {})
       expect(state).to.deep.equal({
         datas: undefined,
@@ -283,6 +285,61 @@ describe('(Redux Module) unsplash', function () {
         error: undefined,
         sending: false,
       })
+    })
+  })
+
+  describe('(Request)', () => {
+    it('should fetch photo', (done) => {
+      let dispatch = sinon.spy()
+      let fetchPhoto = actions.fetchPhotosRequests(dispatch).fetchPhoto
+      fetchMock.restore().get(`${ URL }/${ METHOD }/${ 1 }?client_id=${ CLIENT_ID }`, JSON.stringify('content'))
+      fetchPhoto(1)
+      setTimeout(() => {
+        sinon.assert.callCount(dispatch, 2)
+        sinon.assert.calledWith(dispatch, actions.photoFetchSending())
+        sinon.assert.calledWith(dispatch, actions.photoFetchSuccess('content'))
+        done()
+      }, 100)
+    })
+
+    it('should handle failure when fetching photo', (done) => {
+      let dispatch = sinon.spy()
+      let fetchPhoto = actions.fetchPhotosRequests(dispatch).fetchPhoto
+      fetchMock.restore().get(`${ URL }/${ METHOD }/${ 1 }?client_id=${ CLIENT_ID }`, 400,
+        { response: { throws: 'error' } })
+      fetchPhoto(1)
+      setTimeout(() => {
+        sinon.assert.callCount(dispatch, 2)
+        sinon.assert.calledWith(dispatch, actions.photoFetchSending())
+        sinon.assert.calledWith(dispatch, actions.photoFetchFailure('error'))
+        done()
+      }, 100)
+    })
+
+    it('should fetch photos', (done) => {
+      let dispatch = sinon.spy()
+      let fetchPhotos = actions.fetchPhotosRequests(dispatch).fetchPhotos
+      fetchMock.restore().get(`${ URL }/${ METHOD }?client_id=${ CLIENT_ID }`, JSON.stringify(['content']))
+      fetchPhotos()
+      setTimeout(() => {
+        sinon.assert.callCount(dispatch, 2)
+        sinon.assert.calledWith(dispatch, actions.photosFetchSending())
+        sinon.assert.calledWith(dispatch, actions.photosFetchSuccess(['content']))
+        done()
+      }, 100)
+    })
+
+    it('should handle failure when fetching photos', (done) => {
+      let dispatch = sinon.spy()
+      let fetchPhotos = actions.fetchPhotosRequests(dispatch).fetchPhotos
+      fetchMock.restore().get(`${ URL }/${ METHOD }?client_id=${ CLIENT_ID }`, 400, { response: { throws: 'error' } })
+      fetchPhotos()
+      setTimeout(() => {
+        sinon.assert.callCount(dispatch, 2)
+        sinon.assert.calledWith(dispatch, actions.photosFetchSending())
+        sinon.assert.calledWith(dispatch, actions.photosFetchFailure('error'))
+        done()
+      }, 100)
     })
   })
 })

@@ -94,6 +94,7 @@
     "eslint-plugin-react": "^6.0.0",
     "eslint-plugin-standard": "^2.0.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "fetch-mock": "^5.0.5",
     "file-loader": "^0.9.0",
     "flow-bin": "^0.30.0",
     "flow-interfaces": "^0.6.1",
