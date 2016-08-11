@@ -5,6 +5,7 @@ import sinon from 'sinon'
 import chai from 'chai'
 import sinonChai from 'sinon-chai'
 import chaiEnzyme from 'chai-enzyme'
+require('isomorphic-fetch')
 
 chai.use(sinonChai)
 chai.use(chaiEnzyme())

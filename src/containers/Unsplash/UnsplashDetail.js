@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { parseQueryString } from '../../utils/queryHelper'
 import { actions } from 'ACTIONS/unsplash'
 import UnsplashImgDetail from 'COMPONENTS/UnsplashImg/UnsplashImgDetail'
 
 const UnsplashDetail = React.createClass({
   propTypes: {
     detail: React.PropTypes.object,
-    params: React.PropTypes.object,
     fetchPhoto: React.PropTypes.func.isRequired,
     history: React.PropTypes.object,
   },
@@ -18,7 +18,8 @@ const UnsplashDetail = React.createClass({
   },
   _fetchData () {
     if (!this.props.detail) {
-      this.props.fetchPhoto(this.props.params.id)
+      let query = parseQueryString(location.search)
+      this.props.fetchPhoto(query.id)
     }
   },
   _handleClick () {
@@ -28,7 +29,8 @@ const UnsplashDetail = React.createClass({
     return (
       <div className='container text-center'>
         { this.props.detail && <UnsplashImgDetail item={ this.props.detail } onClick={ this._handleClick } /> }
-      </div>)
+      </div>
+    )
   },
 })
 

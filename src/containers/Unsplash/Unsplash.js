@@ -22,8 +22,8 @@ const Unsplash = React.createClass({
       this.props.fetchPhotos()
     }
   },
-  _handleClick (event) {
-    this.props.dispatch(push(`/detail/${ event.currentTarget.dataset.itemId }`))
+  _handleClick (id) {
+    this.props.dispatch(push(`/detail?id=${ id }`))
   },
   render () {
     return (

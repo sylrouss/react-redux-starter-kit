@@ -9,7 +9,7 @@ import UnsplashDetail from 'containers/Unsplash/UnsplashDetail'
 export default (store) => (
   <Route path='/' component={ App }>
     <IndexRoute component={ Unsplash } />
-    <Route path='detail/:id' component={ UnsplashDetail } />
+    <Route path='detail' component={ UnsplashDetail } />
     <Route path='/404' component={ NotFound } />
     <Redirect from='*' to='/404' />
   </Route>

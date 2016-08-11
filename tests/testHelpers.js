@@ -18,10 +18,8 @@ export const renderIntoDocument = (component) => (
     </IntlProvider>)
 )
 
-export const createMockStore = (state) => {
-  return {
-    subscribe: () => sinon.spy(),
-    dispatch: () => sinon.spy(),
-    getState: () => state,
-  }
-}
+export const createMockStore = (state) => ({
+  dispatch: sinon.spy(),
+  getState: () => state,
+  subscribe: () => sinon.spy(),
+})

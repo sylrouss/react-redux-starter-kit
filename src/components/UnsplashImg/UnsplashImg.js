@@ -7,8 +7,7 @@ const UnsplashImg = ({ datas, onClick }) => (
       <img
         src={ item.urls.small }
         key={ item.id }
-        onClick={ onClick }
-        data-item-id={ item.id } />
+        onClick={ onClick.bind(null, item.id) } />
       )
     }
   </div>
