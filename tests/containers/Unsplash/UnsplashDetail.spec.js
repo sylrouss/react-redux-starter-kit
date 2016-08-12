@@ -12,33 +12,43 @@ describe('(containers) App', () => {
   })
 
   it('should fetch photo on mount', () => {
-    let container = getContainer()
-    expect(container.find('div').text()).to.be.equal('')
-    sinon.assert.calledWith(fetchPhoto, undefined)
+    getContainer(1)
+    sinon.assert.calledWith(fetchPhoto, '1')
+  })
+
+  it('should never fetch photo on mount when already mounted', () => {
+    let detail = { id: '1', urls: { small: 'http://foo.bar.com/image.png' } }
+    getContainer(1, { unsplash: { detail: detail } })
+    sinon.assert.neverCalledWith(fetchPhoto, '1')
+  })
+
+  it('should fetch new photo on mount', () => {
+    let detail = { id: '2', urls: { small: 'http://foo.bar.com/image.png' } }
+    getContainer(1, { unsplash: { detail: detail } })
+    sinon.assert.calledWith(fetchPhoto, '1')
   })
 
   it('should display detail', () => {
     let detail = { id: '1', urls: { small: 'http://foo.bar.com/image.png' } }
-    let container = getContainer({ unsplash: { detail: detail } })
+    let container = getContainer(1, { unsplash: { detail: detail } })
     expect(container.find('UnsplashImgDetail')).not.to.be.undefined
-    expect(fetchPhoto.callCount).to.be.equal(0)
   })
 
   it('should go back when clicking on image', () => {
     let detail = { id: '1', urls: { small: 'http://foo.bar.com/image.png' } }
-    let container = getContainer({ unsplash: { detail: detail } })
+    let container = getContainer(1, { unsplash: { detail: detail } })
     let image = container.find('img')
     image.simulate('click')
     sinon.assert.calledOnce(goBack)
   })
 
-  const getContainer = (state = { unsplash: {} }) => {
+  const getContainer = (id, state = { unsplash: {} }) => {
     store = createMockStore(state)
     let fetchPhotosRequests = sinon.stub(actions, 'fetchPhotosRequests')
     fetchPhoto = sinon.spy()
     fetchPhotosRequests.returns({ fetchPhoto })
     goBack = sinon.spy()
-    props = { history: { goBack } }
+    props = { history: { goBack }, location: { search: `?id=${ id }` } }
     return mount(<Provider store={ store }><UnsplashDetail { ...props } /></Provider>)
   }
 })

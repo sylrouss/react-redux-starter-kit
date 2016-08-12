@@ -1,3 +1,5 @@
+require('isomorphic-fetch')
+
 export const URL = 'https://api.unsplash.com'
 export const METHOD = 'photos'
 export const CLIENT_ID = 'a0b6423c05bef840adda4ad36e509b930f4a76c3d445783e3d1b45c3b7a1c765'
@@ -8,7 +10,6 @@ const PHOTO_FETCH_SENDING = 'PHOTO_FETCH_SENDING'
 const PHOTOS_FETCH_SUCCESS = 'PHOTOS_FETCH_SUCCESS'
 const PHOTOS_FETCH_FAILURE = 'PHOTOS_FETCH_FAILURE'
 const PHOTOS_FETCH_SENDING = 'PHOTOS_FETCH_SENDING'
-const PHOTO_RESET = 'PHOTO_RESET'
 
 const photosFetchSending = () : Action => ({
   type: PHOTOS_FETCH_SENDING,
@@ -44,10 +45,6 @@ const photoFetchSuccess = (data) => ({
   payload: {
     datas: data,
   },
-})
-
-const photoReset = () => ({
-  type: PHOTO_RESET,
 })
 
 const fetchPhotosRequests = (dispatch) => {
@@ -90,7 +87,6 @@ export const actions = {
   photosFetchFailure,
   photosFetchSending,
   photosFetchSuccess,
-  photoReset,
 }
 
 const ACTION_HANDLERS = {
@@ -101,6 +97,7 @@ const ACTION_HANDLERS = {
   }),
   [PHOTO_FETCH_SENDING]: (state, action) => ({
     ...state,
+    detail: undefined,
     sending: true,
   }),
   [PHOTO_FETCH_SUCCESS]: (state, action) => ({
@@ -109,10 +106,6 @@ const ACTION_HANDLERS = {
     error: undefined,
     sending: false,
   }),
-  [PHOTO_RESET]: (state, action) => ({
-    ...state,
-    detail: undefined,
-  }),
   [PHOTOS_FETCH_FAILURE]: (state, action) => ({
     ...state,
     error: action.payload.error,
@@ -120,6 +113,7 @@ const ACTION_HANDLERS = {
   }),
   [PHOTOS_FETCH_SENDING]: (state, action) => ({
     ...state,
+    datas: undefined,
     sending: true,
   }),
   [PHOTOS_FETCH_SUCCESS]: (state, action) => ({

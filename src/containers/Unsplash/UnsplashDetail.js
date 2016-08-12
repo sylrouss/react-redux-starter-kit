@@ -9,6 +9,7 @@ const UnsplashDetail = React.createClass({
     detail: React.PropTypes.object,
     fetchPhoto: React.PropTypes.func.isRequired,
     history: React.PropTypes.object,
+    location: React.PropTypes.object,
   },
   componentWillMount () {
     this._fetchData()
@@ -17,8 +18,8 @@ const UnsplashDetail = React.createClass({
     this._fetchData()
   },
   _fetchData () {
-    if (!this.props.detail) {
-      let query = parseQueryString(location.search)
+    let query = parseQueryString(this.props.location.search)
+    if (!this.props.detail || this.props.detail.id !== query.id) {
       this.props.fetchPhoto(query.id)
     }
   },

@@ -98,19 +98,6 @@ describe('(Redux Module) unsplash', () => {
         })
       })
     })
-
-    describe('(Action Creator) photoReset', () => {
-      it('should be exported as a function', () => {
-        expect(actions.photoReset).to.be.a('function')
-      })
-
-      it('should return an action with type "PHOTO_RESET" with payload', () => {
-        let action = actions.photoReset()
-        expect(action).to.deep.equal({
-          type: 'PHOTO_RESET',
-        })
-      })
-    })
   })
 
   describe('(Reducer)', () => {
@@ -250,40 +237,6 @@ describe('(Redux Module) unsplash', () => {
         detail: undefined,
         error: undefined,
         sending: true,
-      })
-    })
-
-    it('should reset photos', () => {
-      let state = unsplashReducer(undefined, {})
-      expect(state).to.deep.equal({
-        datas: undefined,
-        detail: undefined,
-        error: undefined,
-        sending: false,
-      })
-
-      state = unsplashReducer(state, actions.photosFetchSuccess('success 1'))
-      expect(state).to.deep.equal({
-        datas: 'success 1',
-        detail: undefined,
-        error: undefined,
-        sending: false,
-      })
-
-      state = unsplashReducer(state, actions.photoFetchSuccess('success 2'))
-      expect(state).to.deep.equal({
-        datas: 'success 1',
-        detail: 'success 2',
-        error: undefined,
-        sending: false,
-      })
-
-      state = unsplashReducer(state, actions.photoReset())
-      expect(state).to.deep.equal({
-        datas: 'success 1',
-        detail: undefined,
-        error: undefined,
-        sending: false,
       })
     })
   })
