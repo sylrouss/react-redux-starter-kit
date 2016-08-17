@@ -1,6 +1,5 @@
 import React from 'react'
-import { useRouterHistory, Route } from 'react-router'
-import createBrowserHistory from 'history/lib/createBrowserHistory'
+import { browserHistory, Route } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { default as Root } from 'containers/App/Root'
 import { createMockStore } from '../../testHelpers'
@@ -16,7 +15,6 @@ describe('(containers) Root', () => {
     let store = createMockStore({
       router: {},
     })
-    let browserHistory = useRouterHistory(createBrowserHistory)({ })
     const history = syncHistoryWithStore(browserHistory, store, {
       selectLocationState: (state) => state.router,
     })
