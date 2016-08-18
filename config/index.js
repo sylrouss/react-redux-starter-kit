@@ -26,7 +26,7 @@ const config = {
   // Server Configuration
   // ----------------------------------
   server_host : localip, // use string 'localhost' to prevent exposure on local network
-  server_port : process.env.PORT || 3003,
+  server_port : process.env.PORT || 3000,
 
   // ----------------------------------
   // Compiler Configuration
@@ -43,7 +43,6 @@ const config = {
     colors : true,
   },
   compiler_vendor : [
-    'history',
     'react',
     'react-redux',
     'react-router',
@@ -84,9 +83,7 @@ config.globals = {
   '__PROD__'     : config.env === 'production',
   '__TEST__'     : config.env === 'test',
   '__DEBUG__'    : config.env === 'development' && !argv.no_debug,
-  '__COVERAGE__' : !argv.watch && config.env === 'test',
   '__BASENAME__' : JSON.stringify(process.env.BASENAME || ''),
-  '__API_SERVER_HOST__': JSON.stringify(argv.api_server_host || 'api.mrgiggy.com'),
 }
 
 // ------------------------------------
