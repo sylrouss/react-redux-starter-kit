@@ -1,12 +1,27 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { Router } from 'react-router'
+import { Redirect, Route, Switch } from 'react-router'
+import { ConnectedRouter } from 'react-router-redux'
 
-const Root = ({ history, onUpdate, routerKey, routes, store }) => (
+import App from 'containers/App/App'
+import NotFound from 'containers/App/NotFound'
+import Unsplash from 'containers/Unsplash/Unsplash'
+import UnsplashDetail from 'containers/Unsplash/UnsplashDetail'
+
+const Root = ({ history, onUpdate, store }) => (
   <Provider store={ store }>
-    <div style={ { height: '100%' } }>
-      <Router children={ routes } history={ history } key={ routerKey } onUpdate={ onUpdate } />
-    </div>
+    <ConnectedRouter history={ history } onUpdate={ onUpdate }>
+      <div style={ { height: '100%' } }>
+        <App>
+          <Switch>
+            <Route exact path='/' component={ Unsplash } />
+            <Route path='/detail' component={ UnsplashDetail } />
+            <Route path='/404' component={ NotFound } />
+            <Redirect from='*' to='/404' />
+          </Switch>
+        </App>
+      </div>
+    </ConnectedRouter>
   </Provider>
 )
 

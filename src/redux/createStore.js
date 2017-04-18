@@ -1,5 +1,5 @@
-import { applyMiddleware, compose, createStore } from 'redux'
-import { routerMiddleware } from 'react-router-redux'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
+import { routerMiddleware, routerReducer } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import rootReducer from './rootReducer'
 
@@ -24,7 +24,10 @@ export default (initialState = {}, history) => {
   // Store Instantiation and HMR Setup
   // ======================================================
   const store = createStore(
-    rootReducer,
+    combineReducers({
+      ...rootReducer,
+      router: routerReducer,
+    }),
     initialState,
     compose(
       applyMiddleware(...middleware),

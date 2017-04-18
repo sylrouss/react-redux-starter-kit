@@ -1,50 +1,33 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { browserHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory'
 import Root from './containers/App/Root'
 import createStore from './redux/createStore'
 
-// ========================================================
-// Store and History Instantiation
-// ========================================================
-// Create redux store and sync with react-router-redux. We have installed the
-// react-router-redux reducer under the routerKey "router",
-// so we need to provide a custom `selectLocationState` to inform
-// react-router-redux of its location.
-const initialState = localStorage.getItem('appStore') ? JSON.parse(localStorage.getItem('appStore')) : {}
-const store = createStore(initialState, browserHistory)
-const history = syncHistoryWithStore(browserHistory, store, {
-  selectLocationState: (state) => state.router,
-})
+const initialState = window.___INITIAL_STATE__
+const history = createHistory()
+const store = createStore(initialState, history)
 
-// ========================================================
-// Developer Tools Setup
-// ========================================================
 if (__DEBUG__ && window.devToolsExtension) {
   window.devToolsExtension.open()
 }
 
-// ========================================================
-// Render Setup
-// ========================================================
-const MOUNT_NODE = document.getElementById('root')
+const onUpdate = () => {
+  console.log('coucou !')
+}
 
-let render = (routerKey = null) => {
-  const routes = require('./routes').default(store)
+let render = () => {
   ReactDOM.render(
-    <Root history={ history } routes={ routes } store={ store } routerKey={ routerKey } />,
+    <Root history={ history } onUpdate={ onUpdate } store={ store } />,
     document.getElementById('root')
   )
 }
 
-// Enable HMR and catch runtime errors in RedBox
-// This code is excluded from production bundle
 if (__DEV__ && module.hot) {
   const renderApp = render
   const renderError = (error) => {
     const RedBox = require('redbox-react')
-    ReactDOM.render(<RedBox error={ error } />, MOUNT_NODE)
+    ReactDOM.render(<RedBox error={ error } />, document.getElementById('root'))
   }
   render = () => {
     try {
@@ -53,7 +36,6 @@ if (__DEV__ && module.hot) {
       renderError(error)
     }
   }
-  module.hot.accept(['./routes'], () => render())
 }
 
 render()
