@@ -15,7 +15,7 @@ class UnsplashImg extends React.Component {
     </div>
 }
 
-UnsplashImg.PropTypes = {
+UnsplashImg.propTypes = {
   datas: PropTypes.array,
   onClick: PropTypes.func.isRequired,
 }

@@ -8,9 +8,9 @@ import NotFound from 'containers/App/NotFound'
 import Unsplash from 'containers/Unsplash/Unsplash'
 import UnsplashDetail from 'containers/Unsplash/UnsplashDetail'
 
-const Root = ({ history, onUpdate, store }) => (
+const Root = ({ history, store }) => (
   <Provider store={ store }>
-    <ConnectedRouter history={ history } onUpdate={ onUpdate }>
+    <ConnectedRouter history={ history }>
       <div style={ { height: '100%' } }>
         <App>
           <Switch>

@@ -12,16 +12,11 @@ if (__DEBUG__ && window.devToolsExtension) {
   window.devToolsExtension.open()
 }
 
-const onUpdate = () => {
-  console.log('coucou !')
-}
+let render = () => ReactDOM.render(<Root history={ history } store={ store } />, document.getElementById('root'))
 
-let render = () => {
-  ReactDOM.render(
-    <Root history={ history } onUpdate={ onUpdate } store={ store } />,
-    document.getElementById('root')
-  )
-}
+history.listen(() => {
+  console.log(window.location.pathname)
+})
 
 if (__DEV__ && module.hot) {
   const renderApp = render
