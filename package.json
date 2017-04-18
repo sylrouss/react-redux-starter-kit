@@ -76,6 +76,7 @@
     "cssnano": "^3.10.0",
     "debug": "^2.6.3",
     "emailjs": "^1.0.8",
+    "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-react": "^4.3.0",
