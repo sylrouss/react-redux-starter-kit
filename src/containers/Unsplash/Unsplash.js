@@ -9,7 +9,6 @@ const Unsplash = React.createClass({
     datas: React.PropTypes.array,
     dispatch: React.PropTypes.func.isRequired,
     fetchPhotos: React.PropTypes.func.isRequired,
-    history: React.PropTypes.object,
   },
   componentWillMount () {
     this._fetchData()

@@ -5,7 +5,7 @@
     "standard-react"
   ],
   "plugins" : [
-    "flow-vars",
+    "flowtype",
     "react",
   ],
   "env"     : {
@@ -20,15 +20,14 @@
     "__DEV__"      : false,
     "__PROD__"     : false,
     "__DEBUG__"    : false,
-    "__BASENAME__" : false,
   },
   "rules": {
     "comma-dangle": [2, "always-multiline"],
     "semi": [2, "never"],
     "space-infix-ops": 0,
     "max-len": [2, 120, 2],
-    "flow-vars/define-flow-type": 1,
-    "flow-vars/use-flow-type": 1,
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1,
     "jsx-quotes": [2, "prefer-single"],
     "object-curly-spacing": ["error", "always"],
     "template-curly-spacing": ["error", "always"],
@@ -36,5 +35,6 @@
     "react/jsx-no-bind": 0,
     "react/jsx-space-before-closing": [2, "always"],
     "react/prop-types": [0, {"ignore": ["*"]}],
+    "prefer-promise-reject-errors": 0,
   }
 }

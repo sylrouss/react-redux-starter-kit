@@ -1,7 +1,6 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { mount as enzymeMount } from 'enzyme'
-// import messages from '../build/lang/en.json'
 import TestUtils from 'react-addons-test-utils'
 
 export const mount = (component) => (

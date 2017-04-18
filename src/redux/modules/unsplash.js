@@ -56,7 +56,6 @@ const fetchPhotosRequests = (dispatch) => {
         dispatch(photosFetchSuccess(data))
       })
       .catch(error => {
-        console.log(JSON.stringify(error))
         dispatch(photosFetchFailure(error))
       })
   }
@@ -69,7 +68,6 @@ const fetchPhotosRequests = (dispatch) => {
         dispatch(photoFetchSuccess(data))
       })
       .catch(error => {
-        console.log(JSON.stringify(error))
         dispatch(photoFetchFailure(error))
       })
   }

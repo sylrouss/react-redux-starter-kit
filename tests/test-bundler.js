@@ -3,17 +3,18 @@
 // ---------------------------------------
 import sinon from 'sinon'
 import chai from 'chai'
-import sinonChai from 'sinon-chai'
-import chaiEnzyme from 'chai-enzyme'
-require('isomorphic-fetch')
-
-chai.use(sinonChai)
-chai.use(chaiEnzyme())
 
 global.chai = chai
 global.sinon = sinon
 global.expect = chai.expect
 global.should = chai.should()
+
+console.error = (error) => {
+  if (/[React Intl]/.test(error)) {
+    return
+  }
+  throw new Error(error)
+}
 
 // ---------------------------------------
 // Require Tests
